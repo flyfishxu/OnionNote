@@ -22,17 +22,17 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            WearApp()
+            MainApp()
         }
     }
 }
 
 @Composable
-fun WearApp() {
+fun MainApp() {
     val scalingLazyListState: ScalingLazyListState = rememberScalingLazyListState()
     OnionNoteTheme {
         Scaffold(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.background),
             timeText = { TimeText() },
             vignette = {
                 Vignette (vignettePosition =
@@ -54,8 +54,8 @@ fun WearApp() {
 fun Greeting(state: ScalingLazyListState) {
     ScalingLazyColumn(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 16.dp),
+            .fillMaxSize(),
+        anchorType = ScalingLazyListAnchorType.ItemStart,
         verticalArrangement = Arrangement.spacedBy(6.dp),
         state = state,
     ) {
@@ -123,5 +123,5 @@ fun ListChip(modifier: Modifier = Modifier, strId: Int, imageId: Int, click: () 
 @Preview(device = Devices.WEAR_OS_LARGE_ROUND, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
-    WearApp()
+    MainApp()
 }
