@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Onion Note</string>
+    <string name="add_a_note">Add a note</string>
+    <string name="my_notes">My notes</string>
+    <string name="app_settings">App settings</string>
+    <string name="about">About</string>
+</resources>
