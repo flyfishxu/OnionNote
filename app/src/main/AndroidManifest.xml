@@ -26,7 +26,6 @@
         <activity
             android:name=".presentation.AddNoteActivity"
             android:exported="false"
-            android:label="@string/title_activity_presentation._add_note"
             android:theme="@android:style/Theme.DeviceDefault">
             <meta-data
                 android:name="android.app.lib_name"
@@ -35,7 +34,6 @@
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@android:style/Theme.DeviceDefault">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

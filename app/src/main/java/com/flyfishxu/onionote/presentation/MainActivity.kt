@@ -1,5 +1,7 @@
 package com.flyfishxu.onionote.presentation
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
@@ -29,6 +32,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainApp() {
+    val context = LocalContext.current
     val scalingLazyListState: ScalingLazyListState = rememberScalingLazyListState()
     OnionNoteTheme {
         Scaffold(
@@ -45,13 +49,13 @@ fun MainApp() {
                 }
             }
         ) {
-            Greeting(scalingLazyListState)
+            Greeting(scalingLazyListState, context)
         }
     }
 }
 
 @Composable
-fun Greeting(state: ScalingLazyListState) {
+fun Greeting(state: ScalingLazyListState, context: Context) {
     ScalingLazyColumn(
         modifier = Modifier
             .fillMaxSize(),
@@ -66,7 +70,7 @@ fun Greeting(state: ScalingLazyListState) {
                 strId = R.string.add_a_note,
                 imageId =  R.drawable.ic_outline_add
             ) {
-                // Todo
+                context.startActivity(Intent(context, AddNoteActivity::class.java))
             }
         }
         item {
