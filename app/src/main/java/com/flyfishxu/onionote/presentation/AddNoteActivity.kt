@@ -4,10 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -46,22 +46,22 @@ fun AddNoteApp() {
                 }
             }
         ) {
-            EditNote(scalingLazyListState)
+            EditNote()
         }
     }
 }
 
 @Composable
-fun EditNote(state: ScalingLazyListState) {
-    ScalingLazyColumn(
+fun EditNote() {
+    var text by rememberSaveable { mutableStateOf("abcdefg") }
+    BasicTextField(
+        value = text,
+        textStyle = TextStyle(color = Color.White),
+        onValueChange = { text = it },
         modifier = Modifier
-            .fillMaxSize(),
-        anchorType = ScalingLazyListAnchorType.ItemStart,
-        verticalArrangement = Arrangement.spacedBy(6.dp),
-        state = state,
-    ) {
-
-    }
+            .fillMaxSize()
+            .padding(36.dp, 28.dp, 36.dp, 0.dp)
+    )
 }
 
 @Preview(device = Devices.WEAR_OS_LARGE_ROUND, showSystemUi = true)
