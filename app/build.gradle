@@ -58,7 +58,13 @@ dependencies {
     implementation "androidx.wear.compose:compose-foundation:$wear_compose_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
-    implementation 'androidx.activity:activity-compose:1.6.0'
+    implementation 'androidx.activity:activity-compose:1.6.1'
+    implementation("androidx.wear.tiles:tiles:1.1.0")
+    implementation("androidx.wear.tiles:tiles-material:1.1.0")
+    implementation "com.google.android.horologist:horologist-compose-tools:$horologistVersion"
+    implementation "com.google.android.horologist:horologist-tiles:$horologistVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinX"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-guava:$kotlinX"
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
