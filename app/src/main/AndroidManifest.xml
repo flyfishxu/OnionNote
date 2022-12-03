@@ -24,6 +24,15 @@
             android:value="true" />
 
         <activity
+            android:name=".presentation.NoteListActivity"
+            android:exported="false"
+            android:label="@string/title_activity_presentation._note_list"
+            android:theme="@android:style/Theme.DeviceDefault">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".presentation.AddNoteActivity"
             android:exported="false"
             android:theme="@android:style/Theme.DeviceDefault">
