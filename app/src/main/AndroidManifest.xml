@@ -54,6 +54,23 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <service
+            android:name=".presentation.tile.ShowNoteTileService"
+            android:icon="@drawable/ic_outline_notes"
+            android:label="Tile"
+            android:description="@string/add_a_note"
+            android:exported="true"
+            android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER">
+
+            <intent-filter>
+                <action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" />
+            </intent-filter>
+
+            <!-- The tile preview shown when configuring tiles on your phone -->
+            <meta-data
+                android:name="androidx.wear.tiles.PREVIEW"
+                android:resource="@drawable/ic_outline_notes" />
+        </service>
     </application>
 
 </manifest>

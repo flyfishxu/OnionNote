@@ -2,6 +2,8 @@ buildscript {
     ext {
         compose_version = '1.4.0-alpha02'
         wear_compose_version = '1.1.0-rc01'
+        kotlinX = '1.6.4'
+        horologistVersion = '0.1.8'
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
