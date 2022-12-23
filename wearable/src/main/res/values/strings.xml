@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Onion Note</string>
+    <string name="new_note">New note</string>
+    <string name="my_notes">My notes</string>
+    <string name="app_settings">App settings</string>
+    <string name="about">About</string>
+    <string name="new_note_title">New note title</string>
+    <string name="new_note_content">New note content</string>
+    <string name="notice">Notice</string>
+    <string name="sure_to_delete">Are you sure to delete this note?</string>
+    <string name="there_is_nothing">There is nothing</string>
+    <string name="sync_auto">Auto sync when connected phone</string>
+    <string name="version">Version</string>
+    <string name="edit_note">Edit note</string>
+</resources>

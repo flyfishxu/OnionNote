@@ -13,4 +13,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Onion Note"
-include ':app'
+include ':wearable'
+include ':mobile'
