@@ -44,6 +44,7 @@ class EditNoteActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val sp = getSharedPreferences("data", MODE_PRIVATE)
         val noteId = intent.getIntExtra("noteId", -1)
         val db = Room.databaseBuilder(
             this,
@@ -65,6 +66,11 @@ class EditNoteActivity : ComponentActivity() {
                             showDialog = showDialog,
                             positive = {
                                 lifecycleScope.launch(Dispatchers.Default) {
+                                    if (sp.getInt("tileNoteId", -1) == note.id) {
+                                        val spEditor = sp.edit()
+                                        spEditor.putInt("tileNoteId", -1)
+                                        spEditor.apply()
+                                    }
                                     noteDao.deleteNote(note)
                                     finish()
                                 }
@@ -170,7 +176,7 @@ class EditNoteActivity : ComponentActivity() {
                         showDialog.value = true
                     }
                 ) {
-                    Image(painter = painterResource(id = R.drawable.ic_baseline_delete), contentDescription = "Delete Note")
+                    Image(painter = painterResource(id = R.drawable.ic_baseline_delete_white), contentDescription = "Delete Note")
                 }
             }
         }

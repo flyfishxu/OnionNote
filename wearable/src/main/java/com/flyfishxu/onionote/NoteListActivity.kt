@@ -1,9 +1,12 @@
 package com.flyfishxu.onionote
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -26,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import androidx.wear.compose.material.*
+import androidx.wear.compose.material.dialog.Dialog
 import com.flyfishxu.onionote.database.Note
 import com.flyfishxu.onionote.database.NoteDao
 import com.flyfishxu.onionote.database.NoteDatabase
@@ -38,14 +43,17 @@ import kotlinx.coroutines.withContext
 
 class NoteListActivity : ComponentActivity() {
     private lateinit var showDialog: MutableState<Boolean>
+    private lateinit var showMenu: MutableState<Boolean>
     private lateinit var items: MutableState<List<Note>>
     private lateinit var noteDao: NoteDao
     private lateinit var selectedNote: Note
+    private lateinit var sp: SharedPreferences
     private var firstLaunch = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var innerItems: List<Note>
+        sp = getSharedPreferences("data", MODE_PRIVATE)
         lifecycleScope.launch(Dispatchers.Default) {
             val db = Room.databaseBuilder(
                 this@NoteListActivity,
@@ -61,6 +69,9 @@ class NoteListActivity : ComponentActivity() {
                     showDialog = remember {
                         mutableStateOf(false)
                     }
+                    showMenu = remember {
+                        mutableStateOf(false)
+                    }
                     if (showDialog.value)
                         InfoDialog(
                             title= stringResource(id = R.string.notice),
@@ -74,7 +85,11 @@ class NoteListActivity : ComponentActivity() {
                                         if (i.id != selectedNote.id) newItems.add(i)
                                     }
                                     items.value = newItems
-                                    items.value
+                                    if (sp.getInt("tileNoteId", -1) == selectedNote.id) {
+                                        val spEditor = sp.edit()
+                                        spEditor.putInt("tileNoteId", -1)
+                                        spEditor.apply()
+                                    }
                                     noteDao.deleteNote(selectedNote)
                                 }
                                 showDialog.value = false
@@ -83,7 +98,8 @@ class NoteListActivity : ComponentActivity() {
                                 showDialog.value = false
                             })
                     else {
-                        NoteListApp()
+                        if (showMenu.value) MenuApp()
+                        else NoteListApp()
                     }
                 }
             }
@@ -180,7 +196,7 @@ class NoteListActivity : ComponentActivity() {
                         onDrag = { _, _ -> },
                         onDragStart = {
                             selectedNote = note
-                            showDialog.value = true
+                            showMenu.value = true
                         }
                     )
                 },
@@ -189,6 +205,95 @@ class NoteListActivity : ComponentActivity() {
                     Text(text = note.title)
                     Text(text = note.content, fontWeight = FontWeight.Light)
                 }
+            },
+            onClick = click,
+            colors = ChipDefaults.chipColors(Color(0xFF202124))
+        )
+    }
+
+    @Composable
+    fun MenuApp() {
+        val scalingLazyListState = rememberScalingLazyListState()
+        Dialog(
+            showDialog = showMenu.value,
+            onDismissRequest = { showMenu.value = false }
+        ) {
+            OnionNoteTheme {
+                Scaffold(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(MaterialTheme.colors.background),
+                    timeText = { TimeText() },
+                    vignette = {
+                        Vignette(
+                            vignettePosition =
+                            VignettePosition.TopAndBottom
+                        )
+                    },
+                    positionIndicator = {
+                        if (scalingLazyListState.isScrollInProgress) {
+                            PositionIndicator(
+                                scalingLazyListState =
+                                scalingLazyListState
+                            )
+                        }
+                    }
+                ) {
+                    MenuList(scalingLazyListState)
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun MenuList(state: ScalingLazyListState) {
+        ScalingLazyColumn(
+            modifier = Modifier
+                .fillMaxSize(),
+            anchorType = ScalingLazyListAnchorType.ItemStart,
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+            state = state,
+        ) {
+            item {
+                ListChip(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    strId = R.string.set_to_tile,
+                    imageId = R.drawable.ic_outline_watch
+                ) {
+                    val spEditor = sp.edit()
+                    spEditor.putInt("tileNoteId", selectedNote.id!!)
+                    spEditor.apply()
+                    Toast.makeText(this@NoteListActivity, getString(R.string.set_to_tile_successfully), Toast.LENGTH_LONG).show()
+                    showMenu.value = false
+                }
+            }
+            item {
+                ListChip(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    strId = R.string.delete_note,
+                    imageId = R.drawable.ic_baseline_delete
+                ) {
+                    showMenu.value = false
+                    showDialog.value = true
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun ListChip(modifier: Modifier = Modifier, strId: Int, imageId: Int, click: () -> Unit) {
+        Chip(
+            modifier = modifier,
+            label = {
+                Text(text = stringResource(id = strId))
+            },
+            icon = {
+                Image(
+                    painter = painterResource(id = imageId),
+                    contentDescription = stringResource(id = strId)
+                )
             },
             onClick = click,
             colors = ChipDefaults.chipColors(Color(0xFF202124))
@@ -204,5 +309,11 @@ class NoteListActivity : ComponentActivity() {
         items = remember { mutableStateOf(listOf(note1, note2)) }
         selectedNote = note1
         NoteListApp()
+    }
+
+    @Preview(device = Devices.WEAR_OS_LARGE_ROUND, showSystemUi = true)
+    @Composable
+    fun MenuPreview() {
+        MenuApp()
     }
 }

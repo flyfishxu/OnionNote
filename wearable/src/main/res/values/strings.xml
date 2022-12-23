@@ -12,4 +12,7 @@
     <string name="sync_auto">Auto sync when connected phone</string>
     <string name="version">Version</string>
     <string name="edit_note">Edit note</string>
+    <string name="set_to_tile">Set to tile</string>
+    <string name="delete_note">Delete note</string>
+    <string name="set_to_tile_successfully">Set to tile successfully</string>
 </resources>

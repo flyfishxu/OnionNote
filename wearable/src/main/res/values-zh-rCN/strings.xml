@@ -13,4 +13,7 @@
     <string name="sync_auto">连接手机时自动同步</string>
     <string name="version">版本</string>
     <string name="edit_note">编辑笔记</string>
+    <string name="set_to_tile">设置到卡片</string>
+    <string name="delete_note">删除笔记</string>
+    <string name="set_to_tile_successfully">已成功设置到卡片</string>
 </resources>
