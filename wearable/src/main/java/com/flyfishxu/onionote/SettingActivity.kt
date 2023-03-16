@@ -95,7 +95,7 @@ class SettingActivity : ComponentActivity() {
                     label = {
                         Column {
                             Text(text = stringResource(id = R.string.version))
-                            Text(text = "0.0.1 Test", fontWeight = FontWeight.Light)
+                            Text(text = BuildConfig.VERSION_NAME, fontWeight = FontWeight.Light)
                         }
                     },
                     onClick = {  },

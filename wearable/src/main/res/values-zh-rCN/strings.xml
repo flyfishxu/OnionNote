@@ -6,7 +6,7 @@
     <string name="app_settings">应用设置</string>
     <string name="about">关于</string>
     <string name="new_note_title">新建笔记标题</string>
-    <string name="new_note_content">新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文新建笔记正文</string>
+    <string name="new_note_content">新建笔记正文</string>
     <string name="notice">提示</string>
     <string name="sure_to_delete">您确定要删除这条笔记吗？</string>
     <string name="there_is_nothing">这里什么都没有</string>
@@ -16,4 +16,6 @@
     <string name="set_to_tile">设置到卡片</string>
     <string name="delete_note">删除笔记</string>
     <string name="set_to_tile_successfully">已成功设置到卡片</string>
+    <string name="github_link">Github 链接</string>
+    <string name="app_introduction">"应用介绍 应用介绍 应用介绍 应用介绍 应用介绍 应用介绍 应用介绍 应用介绍 应用介绍 应用介绍 应用介绍 应用介绍 应用介绍 应用介绍 应用介绍 应用介绍 "</string>
 </resources>
