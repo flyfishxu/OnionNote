@@ -4,13 +4,15 @@ import androidx.room.Room
 import androidx.wear.tiles.*
 import androidx.wear.tiles.LayoutElementBuilders.LayoutElement
 import com.flyfishxu.onionote.database.NoteDatabase
-import com.google.android.horologist.tiles.CoroutinesTileService
+import com.google.android.horologist.tiles.ExperimentalHorologistTilesApi
+import com.google.android.horologist.tiles.SuspendingTileService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 private const val RESOURCES_VERSION = "0"
 
-class ShowNoteTileService : CoroutinesTileService() {
+@OptIn(ExperimentalHorologistTilesApi::class)
+class ShowNoteTileService : SuspendingTileService() {
 
 
     override suspend fun resourcesRequest(
